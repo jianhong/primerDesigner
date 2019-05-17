@@ -1,4 +1,5 @@
-pkg <- installed.packages()$Package
+pkg <- installed.packages()
+pkg <- pkg$Package
 if(!"biomaRt" %in% pkg){
   if(!"BiocManager" %in% pkg){
     install.packages("BiocManager", repos = "https://cloud.r-project.org")
