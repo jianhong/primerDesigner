@@ -63,6 +63,7 @@ primers <- readLines(file.path(outfolder, "out.txt"))
 breaker <- which(primers=="=")
 breaker <- diff(c(0, breaker))
 bf <- rep(seq_along(breaker), breaker)
+stopifnot(length(bf)==length(primers))
 primers <- split(primers, bf)
 ## make as a table
 primers <- lapply(primers, function(.ele){
