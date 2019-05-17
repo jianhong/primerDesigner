@@ -15,6 +15,7 @@ primer3path <- "primer3_core"
 speciesdb <- c("human"="hsapiens", "mouse"="mmusculus", "zebrafish"="drerio")
 ids <- c("human"="hgnc_symbol", "mouse"="mgi_symbol", "zebrafish"="zfin_id_symbol")
 species <- "human"
+args <- commandArgs(trailingOnly = TRUE)
 if(length(args)==0){
   message("Use default filename: genelist.txt; species: human; template: example.txt;",
           "outfolder: output; primer3path: primer3_core")
