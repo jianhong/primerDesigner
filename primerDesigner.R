@@ -1,5 +1,5 @@
 pkg <- installed.packages()
-pkg <- pkg$Package
+pkg <- rownames(pkg)
 if(!"biomaRt" %in% pkg){
   if(!"BiocManager" %in% pkg){
     install.packages("BiocManager", repos = "https://cloud.r-project.org")
@@ -35,6 +35,7 @@ genes <- readLines(filename)
 mart <- useMart("ensembl", dataset=paste0(speciesdb[species], "_gene_ensembl"))
 ## get cDNA sequence
 seq <- getSequence(id=genes, type=ids[species], seqType="cdna", mart=mart)
+seq <- seq[order(seq[, 2]), ]
 ## set unique id
 id <- rle(seq[, 2])
 seq$id <- paste(seq[, 2], unlist(sapply(id$lengths, seq.int)), sep="_")
@@ -60,6 +61,7 @@ if(out!=0){
 primers <- readLines(file.path(outfolder, "out.txt"))
 ## split the primer for each cDNA
 breaker <- which(primers=="=")
+breaker <- diff(c(0, breaker))
 bf <- rep(seq_along(breaker), breaker)
 primers <- split(primers, bf)
 ## make as a table
