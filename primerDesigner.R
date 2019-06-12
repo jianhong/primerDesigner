@@ -9,18 +9,21 @@ if(!"biomaRt" %in% pkg){
 
 library(biomaRt)
 filename <- "genelist.txt"
+golist <- FALSE
 template <- "example.txt"
 outfolder <- "output"
 primer3path <- "primer3_core"
 speciesdb <- c("human"="hsapiens", "mouse"="mmusculus", "zebrafish"="drerio")
 ids <- c("human"="hgnc_symbol", "mouse"="mgi_symbol", "zebrafish"="zfin_id_symbol")
+orgDbs <- c("human"="org.Hs.eg.db", "mouse"="org.Mm.eg.db", "zebrafish"="org.Dr.eg.db")
 species <- "human"
 barcode="ACGT"
 UMI="ACGT"
 args <- commandArgs(trailingOnly = TRUE)
 if(length(args)==0){
   message("Use default filename: genelist.txt; species: human; template: example.txt;",
-          "outfolder: output; primer3path: primer3_core; barcode: ACGT; UMI: ACGT")
+          "outfolder: output; primer3path: primer3_core; barcode: ACGT; UMI: ACGT;",
+          "golist: FALSE")
 }else{
   for(i in seq_along(args)){
     print(args[[i]])
@@ -34,6 +37,15 @@ dir.create(outfolder, recursive = TRUE)
 param <- paste(readLines(template), collapse = "\n")
 ## read gene list
 genes <- readLines(filename)
+if(golist){
+  ## check org db
+  orgDb <- orgDbs[species]
+  if(!orgDb %in% pkg){
+    BiocManager::install(orgDb)
+  }
+  library(orgDb, character.only = TRUE)
+  genes <- getGeneByGOTerms(genes, orgDb)
+}
 ## use mart
 mart <- useMart("ensembl", dataset=paste0(speciesdb[species], "_gene_ensembl"))
 ## get cDNA sequence

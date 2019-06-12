@@ -23,11 +23,17 @@ Last line must be `=`.
 ## gene list file
 
 The target gene symbol list. One symbol per line. see genelist.txt.
+if GO term is supplied, set golist to TRUE.
 
 ## run scipt
 
 ```
 R CMD BATCH --no-save --no-restore '--args species="human"' primerDesigner.R out.log.txt &
+```
+
+By GO term
+```
+R CMD BATCH --no-save --no-restore '--args species="human" filename="goterms.txt" golist=TRUE' primerDesigner.R out.log.txt &
 ```
 
 ## arguments
