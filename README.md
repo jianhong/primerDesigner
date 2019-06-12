@@ -36,6 +36,11 @@ By GO term
 R CMD BATCH --no-save --no-restore '--args species="human" filename="goterms.txt" golist=TRUE' primerDesigner.R out.log.txt &
 ```
 
+Run it in slurm
+```
+srun --mem=4GB R CMD BATCH --no-save --no-restore '--args species="human" filename="goterms.txt" golist=TRUE outfolder="output2"' primerDesigner.R out.log.txt &
+```
+
 ## arguments
 
 species, could be human, mouse, zebrafish, default `human`.
