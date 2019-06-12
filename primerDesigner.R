@@ -57,7 +57,7 @@ seq$cdna <- paste0(seq$cdna, primer3end.rc)
 output <- file.path(outfolder, "p3config.txt")
 seq_id <- paste0("SEQUENCE_ID=", seq$id)
 seq_tmp <- paste0("SEQUENCE_TEMPLATE=", seq$cdna)
-primer3 <- "TTTTTTTAAGCAGTGGTATCAACGCAGAGTAC"
+primer3 <- "AAGCAGTGGTATCAACGCAGAGTAC"
 primer3 <- paste0("SEQUENCE_PRIMER_REVCOMP=", primer3)
 product_size <- paste0("PRIMER_PRODUCT_SIZE_RANGE=", 
                        ifelse(seqlen>1000, 
