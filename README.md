@@ -7,7 +7,7 @@ pipeline for primer3
 
  [primer3](http://primer3.org/manual.html#installLinux)
  
- [R](https://www.r-project.org/) and package [biomaRt](https://bioconductor.org/packages/release/bioc/html/biomaRt.html)
+ [R](https://www.r-project.org/) and package [biomaRt](https://bioconductor.org/packages/release/bioc/html/biomaRt.html), [Biostrings](https://bioconductor.org/packages/release/bioc/html/Biostrings.html)
 
 ## install
 

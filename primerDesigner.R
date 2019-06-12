@@ -4,7 +4,7 @@ if(!"biomaRt" %in% pkg){
   if(!"BiocManager" %in% pkg){
     install.packages("BiocManager", repos = "https://cloud.r-project.org")
   }
-  BiocManager::install("biomaRt")
+  BiocManager::install(c("biomaRt", "Biostrings"))
 }
 
 library(biomaRt)
@@ -15,10 +15,12 @@ primer3path <- "primer3_core"
 speciesdb <- c("human"="hsapiens", "mouse"="mmusculus", "zebrafish"="drerio")
 ids <- c("human"="hgnc_symbol", "mouse"="mgi_symbol", "zebrafish"="zfin_id_symbol")
 species <- "human"
+barcode="ACGT"
+UMI="ACGT"
 args <- commandArgs(trailingOnly = TRUE)
 if(length(args)==0){
   message("Use default filename: genelist.txt; species: human; template: example.txt;",
-          "outfolder: output; primer3path: primer3_core")
+          "outfolder: output; primer3path: primer3_core; barcode: ACGT; UMI: ACGT")
 }else{
   for(i in seq_along(args)){
     print(args[[i]])
@@ -41,11 +43,25 @@ seq <- seq[order(seq[, 2]), ]
 id <- rle(seq[, 2])
 seq$id <- paste(seq[, 2], unlist(sapply(id$lengths, seq.int)), sep="_")
 
-## prepare the 
+## prepare parameters
+library(Biostrings)
+primer3end <- DNAString(paste0("TTTTTTTAAGCAGTGGTATCAACGCAGAGTAC",
+                               barcode,
+                               UMI,
+                               "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"))
+primer3end.rc <- reverseComplement(primer3end)
+seqlen <- nchar(seq$cdna)
+seqlen0 <- seqlen -200
+seqlen0[seqlen0<50] <- 50
+seq$cdna <- paste0(seq$cdna, primer3end.rc)
 output <- file.path(outfolder, "p3config.txt")
 seq_id <- paste0("SEQUENCE_ID=", seq$id)
 seq_tmp <- paste0("SEQUENCE_TEMPLATE=", seq$cdna)
-outStr <- rbind(seq_id, seq_tmp, rep(param, length(seq_id)))
+primer3 <- paste0("PRIMER_MUST_MATCH_THREE_PRIME=nnn", primer3end)
+product_size <- paste0("PRIMER_PRODUCT_SIZE_RANGE=", 
+                       ifelse(seqlen>1000, 
+                              "800-2000", paste0(seqlen0, "-", seqlen)))
+outStr <- rbind(seq_id, seq_tmp, primer3, product_size, rep(param, length(seq_id)))
 outStr <- as.character(outStr)
 writeLines(outStr, output)
 
