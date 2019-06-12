@@ -44,6 +44,7 @@ if(golist){
     BiocManager::install(orgDb)
   }
   library(orgDb, character.only = TRUE)
+  source("getGeneByGoTerms.R")
   genes <- getGeneByGOTerms(genes, orgDb)
 }
 ## use mart
