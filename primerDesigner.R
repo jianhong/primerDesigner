@@ -137,4 +137,4 @@ for(i in seq_along(gene_name)){
 out.mat <- do.call(rbind, out.mat)
 colnames(out.mat) <- c("sequence_id", "gene_name", "primer_id", "sequence", 
                        "primer_length", "product_length", "primer_TM_value")
-write.csv(out.mat, file.path(outfolder, "summary.csv"))
+write.csv(out.mat, file.path(outfolder, "summary.csv"), row.names = FALSE)
