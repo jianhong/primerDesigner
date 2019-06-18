@@ -60,3 +60,8 @@ template, the template file name, default `example.txt`.
 outfolder, output folder, default `output`.
 
 primer3path, the path to primer3_core, default `primer3_core`.
+
+## error and log
+
+Log file is out.log.txt for primerDesigner.R and ${outfolder}/out.txt for primer3. 
+Error file for primer3 is ${outfolder}/err.txt.
