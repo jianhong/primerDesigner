@@ -17,7 +17,7 @@ git clone https://github.com/jianhong/primerDesigner.git
 
 ## template file
 
-Template file is the input file by removing the SEQUENCE_ID and SEQUENCE_TEMPLATE. see example.txt.
+Template file is the input file by removing the SEQUENCE_ID and SEQUENCE_TEMPLATE. Default is example.txt.
 Last line must be `=`. Reference: http://primer3.org/manual.html#globalTags
 
 For example, if you want to change the number of primers, reset the line of PRIMER_NUM_RETURN=5.
@@ -25,7 +25,7 @@ If you want to change the primer TM value to 42, you can add PRIMER_OPT_TM=42.0.
 
 ## gene list file
 
-The target gene symbol list. One symbol per line. see genelist.txt.
+The target gene symbol list. One symbol per line. Default is genelist.txt.
 if GO term is supplied, set golist to TRUE.
 
 ## run scipt
