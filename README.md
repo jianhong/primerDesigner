@@ -21,7 +21,12 @@ Template file is the input file by removing the SEQUENCE_ID and SEQUENCE_TEMPLAT
 Last line must be `=`. Reference: http://primer3.org/manual.html#globalTags
 
 For example, if you want to change the number of primers, reset the line of PRIMER_NUM_RETURN=5.
-If you want to change the primer TM value to 42, you can add PRIMER_OPT_TM=42.0.
+If you want to change the primer TM value to 42, you can add three lines in the template file:
+```
+PRIMER_OPT_TM=42.0
+PRIMER_MIN_TM=39.0
+PRIMER_MAX_TM=45.0
+```
 
 ## gene list file
 
