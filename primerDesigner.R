@@ -121,15 +121,17 @@ out.mat <- list()
 k <- 1
 for(i in seq_along(gene_name)){
   J <- as.numeric(mat[i, "PRIMER_LEFT_NUM_RETURNED"])
-  for(j in seq.int(J)){
-    sequence <- mat[i, paste0("PRIMER_LEFT_", j-1, "_SEQUENCE")]
-    primer_length <- nchar(sequence)
-    product_length <- nchar(mat[i, "SEQUENCE_TEMPLATE"]) -
-      as.numeric(strsplit(mat[i, paste0("PRIMER_LEFT_", j-1)], ",")[[1]][1]) + 1
-    primer_TM_value <- mat[i, paste0("PRIMER_LEFT_", j-1, "_TM")]
-    out.mat[[k]] <- c(mat[i, "SEQUENCE_ID"], gene_name[i], paste0(mat[i, "SEQUENCE_ID"], "_", j),
-                      sequence, primer_length, product_length, primer_TM_value)
-    k <- k+1
+  if(J>0){
+    for(j in seq.int(J)){
+      sequence <- mat[i, paste0("PRIMER_LEFT_", j-1, "_SEQUENCE")]
+      primer_length <- nchar(sequence)
+      product_length <- nchar(mat[i, "SEQUENCE_TEMPLATE"]) -
+        as.numeric(strsplit(mat[i, paste0("PRIMER_LEFT_", j-1)], ",")[[1]][1]) + 1
+      primer_TM_value <- mat[i, paste0("PRIMER_LEFT_", j-1, "_TM")]
+      out.mat[[k]] <- c(mat[i, "SEQUENCE_ID"], gene_name[i], paste0(mat[i, "SEQUENCE_ID"], "_", j),
+                        sequence, primer_length, product_length, primer_TM_value)
+      k <- k+1
+    }
   }
 }
 out.mat <- do.call(rbind, out.mat)
